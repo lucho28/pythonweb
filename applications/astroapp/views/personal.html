@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título de la Página</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Encabezado de la Página</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/acerca">Acerca de</a></li>
+                <li><a href="/contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Contenido Principal</h2>
+        <p>Este es un ejemplo de página web en HTML.</p>
+        {{=form.custom.begin}}
+<label>{{form.custom.label.nombre}}</label>
+<input nama="nombre" type="text" value="{{form.vars.nombre}}" />
+{{=form.custom.widget.nombre}}
+{{=form.custom.error.nombre}}
+{{=form.custom.end}}
+    </main>
+
+    <footer>
+        <p>Derechos de autor &copy; 2023 Tu Sitio Web</p>
+    </footer>
+</body>
+</html>

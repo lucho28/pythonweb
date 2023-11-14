@@ -1,0 +1,569 @@
+timestamp: 2023-10-19T01:11:02.866983
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2023-10-19T01:11:02.887204
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2023-10-19T01:11:02.904611
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:02.926146
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2023-10-19T01:11:02.942840
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2023-10-19T01:11:02.963027
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2023-10-19T01:11:02.981395
+CREATE TABLE "t_observador"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_dni" CHAR(512),
+    "f_nombre" CHAR(512),
+    "f_apellido" CHAR(512),
+    "f_email" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:02.999785
+CREATE TABLE "t_observador_archive"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_dni" CHAR(512),
+    "f_nombre" CHAR(512),
+    "f_apellido" CHAR(512),
+    "f_email" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "current_record" INTEGER REFERENCES "t_observador" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.019860
+CREATE TABLE "t_camara"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_tipo" CHAR(512),
+    "f_marca" CHAR(512),
+    "f_pxls" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.039031
+CREATE TABLE "t_camara_archive"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_tipo" CHAR(512),
+    "f_marca" CHAR(512),
+    "f_pxls" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "current_record" INTEGER REFERENCES "t_camara" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.059006
+CREATE TABLE "t_instrumento"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_tipo" CHAR(512),
+    "f_marca" CHAR(512),
+    "f_diametro" CHAR(512),
+    "f_focal" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.078916
+CREATE TABLE "t_instrumento_archive"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_tipo" CHAR(512),
+    "f_marca" CHAR(512),
+    "f_diametro" CHAR(512),
+    "f_focal" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "current_record" INTEGER REFERENCES "t_instrumento" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.096276
+CREATE TABLE "t_objetivo"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_tipo" CHAR(512),
+    "f_nombre" CHAR(512),
+    "f_comentario" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.115698
+CREATE TABLE "t_objetivo_archive"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_tipo" CHAR(512),
+    "f_nombre" CHAR(512),
+    "f_comentario" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "current_record" INTEGER REFERENCES "t_objetivo" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.134802
+CREATE TABLE "t_proceso"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_software" CHAR(512),
+    "f_comentario" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.154488
+CREATE TABLE "t_proceso_archive"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_software" CHAR(512),
+    "f_comentario" CHAR(512),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "current_record" INTEGER REFERENCES "t_proceso" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.172840
+CREATE TABLE "t_observacion"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_lugar" CHAR(512),
+    "f_fecha" CHAR(512),
+    "f_hora" CHAR(512),
+    "f_exposicion" CHAR(512),
+    "f_tomas" CHAR(512),
+    "f_observador" INTEGER REFERENCES "t_observador" ("id") ON DELETE CASCADE  ,
+    "f_camara" INTEGER REFERENCES "t_camara" ("id") ON DELETE CASCADE  ,
+    "f_instrumento" INTEGER REFERENCES "t_instrumento" ("id") ON DELETE CASCADE  ,
+    "f_proceso" INTEGER REFERENCES "t_proceso" ("id") ON DELETE CASCADE  ,
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T01:11:03.191624
+CREATE TABLE "t_observacion_archive"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "f_lugar" CHAR(512),
+    "f_fecha" CHAR(512),
+    "f_hora" CHAR(512),
+    "f_exposicion" CHAR(512),
+    "f_tomas" CHAR(512),
+    "f_observador" INTEGER REFERENCES "t_observador" ("id") ON DELETE CASCADE  ,
+    "f_camara" INTEGER REFERENCES "t_camara" ("id") ON DELETE CASCADE  ,
+    "f_instrumento" INTEGER REFERENCES "t_instrumento" ("id") ON DELETE CASCADE  ,
+    "f_proceso" INTEGER REFERENCES "t_proceso" ("id") ON DELETE CASCADE  ,
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "current_record" INTEGER REFERENCES "t_observacion" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2023-10-19T09:53:46.691182
+CREATE TABLE `auth_user`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `first_name` VARCHAR(128),
+    `last_name` VARCHAR(128),
+    `email` VARCHAR(512),
+    `password` VARCHAR(512),
+    `registration_key` VARCHAR(512),
+    `reset_password_key` VARCHAR(512),
+    `registration_id` VARCHAR(512),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2023-10-19T09:56:27.467739
+CREATE TABLE `auth_user`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `first_name` VARCHAR(128),
+    `last_name` VARCHAR(128),
+    `email` VARCHAR(512),
+    `password` VARCHAR(512),
+    `registration_key` VARCHAR(512),
+    `reset_password_key` VARCHAR(512),
+    `registration_id` VARCHAR(512),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2023-10-19T09:57:17.336308
+CREATE TABLE `auth_user`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `first_name` VARCHAR(128),
+    `last_name` VARCHAR(128),
+    `email` VARCHAR(512),
+    `password` VARCHAR(512),
+    `registration_key` VARCHAR(512),
+    `reset_password_key` VARCHAR(512),
+    `registration_id` VARCHAR(512),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.388529
+CREATE TABLE `auth_group`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `role` VARCHAR(512),
+    `description` LONGTEXT,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.433278
+CREATE TABLE `auth_membership`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `user_id` INT  , INDEX `user_id__idx` (`user_id`), FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `group_id` INT  , INDEX `group_id__idx` (`group_id`), FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.490760
+CREATE TABLE `auth_permission`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `group_id` INT  , INDEX `group_id__idx` (`group_id`), FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE CASCADE,
+    `name` VARCHAR(512),
+    `table_name` VARCHAR(512),
+    `record_id` INTEGER,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.543637
+CREATE TABLE `auth_event`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `time_stamp` DATETIME,
+    `client_ip` VARCHAR(512),
+    `user_id` INT  , INDEX `user_id__idx` (`user_id`), FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `origin` VARCHAR(512),
+    `description` LONGTEXT,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.591508
+CREATE TABLE `auth_cas`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `user_id` INT  , INDEX `user_id__idx` (`user_id`), FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `created_on` DATETIME,
+    `service` VARCHAR(512),
+    `ticket` VARCHAR(512),
+    `renew` CHAR(1),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.647608
+CREATE TABLE `t_observador`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_dni` VARCHAR(512),
+    `f_nombre` VARCHAR(512),
+    `f_apellido` VARCHAR(512),
+    `f_email` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.797682
+CREATE TABLE `t_observador_archive`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_dni` VARCHAR(512),
+    `f_nombre` VARCHAR(512),
+    `f_apellido` VARCHAR(512),
+    `f_email` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `current_record` INT  , INDEX `current_record__idx` (`current_record`), FOREIGN KEY (`current_record`) REFERENCES `t_observador` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.872959
+CREATE TABLE `t_camara`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_tipo` VARCHAR(512),
+    `f_marca` VARCHAR(512),
+    `f_pxls` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:17.936109
+CREATE TABLE `t_camara_archive`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_tipo` VARCHAR(512),
+    `f_marca` VARCHAR(512),
+    `f_pxls` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `current_record` INT  , INDEX `current_record__idx` (`current_record`), FOREIGN KEY (`current_record`) REFERENCES `t_camara` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:18.005470
+CREATE TABLE `t_instrumento`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_tipo` VARCHAR(512),
+    `f_marca` VARCHAR(512),
+    `f_diametro` VARCHAR(512),
+    `f_focal` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:18.059501
+CREATE TABLE `t_instrumento_archive`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_tipo` VARCHAR(512),
+    `f_marca` VARCHAR(512),
+    `f_diametro` VARCHAR(512),
+    `f_focal` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `current_record` INT  , INDEX `current_record__idx` (`current_record`), FOREIGN KEY (`current_record`) REFERENCES `t_instrumento` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:18.121553
+CREATE TABLE `t_objetivo`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_tipo` VARCHAR(512),
+    `f_nombre` VARCHAR(512),
+    `f_comentario` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:18.180148
+CREATE TABLE `t_objetivo_archive`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_tipo` VARCHAR(512),
+    `f_nombre` VARCHAR(512),
+    `f_comentario` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `current_record` INT  , INDEX `current_record__idx` (`current_record`), FOREIGN KEY (`current_record`) REFERENCES `t_objetivo` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:18.249571
+CREATE TABLE `t_proceso`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_software` VARCHAR(512),
+    `f_comentario` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:18.308024
+CREATE TABLE `t_proceso_archive`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_software` VARCHAR(512),
+    `f_comentario` VARCHAR(512),
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `current_record` INT  , INDEX `current_record__idx` (`current_record`), FOREIGN KEY (`current_record`) REFERENCES `t_proceso` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:18.385727
+CREATE TABLE `t_observacion`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_lugar` VARCHAR(512),
+    `f_fecha` VARCHAR(512),
+    `f_hora` VARCHAR(512),
+    `f_exposicion` VARCHAR(512),
+    `f_tomas` VARCHAR(512),
+    `f_observador` INT  , INDEX `f_observador__idx` (`f_observador`), FOREIGN KEY (`f_observador`) REFERENCES `t_observador` (`id`) ON DELETE CASCADE,
+    `f_camara` INT  , INDEX `f_camara__idx` (`f_camara`), FOREIGN KEY (`f_camara`) REFERENCES `t_camara` (`id`) ON DELETE CASCADE,
+    `f_instrumento` INT  , INDEX `f_instrumento__idx` (`f_instrumento`), FOREIGN KEY (`f_instrumento`) REFERENCES `t_instrumento` (`id`) ON DELETE CASCADE,
+    `f_proceso` INT  , INDEX `f_proceso__idx` (`f_proceso`), FOREIGN KEY (`f_proceso`) REFERENCES `t_proceso` (`id`) ON DELETE CASCADE,
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T09:57:18.486058
+CREATE TABLE `t_observacion_archive`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `f_lugar` VARCHAR(512),
+    `f_fecha` VARCHAR(512),
+    `f_hora` VARCHAR(512),
+    `f_exposicion` VARCHAR(512),
+    `f_tomas` VARCHAR(512),
+    `f_observador` INT  , INDEX `f_observador__idx` (`f_observador`), FOREIGN KEY (`f_observador`) REFERENCES `t_observador` (`id`) ON DELETE CASCADE,
+    `f_camara` INT  , INDEX `f_camara__idx` (`f_camara`), FOREIGN KEY (`f_camara`) REFERENCES `t_camara` (`id`) ON DELETE CASCADE,
+    `f_instrumento` INT  , INDEX `f_instrumento__idx` (`f_instrumento`), FOREIGN KEY (`f_instrumento`) REFERENCES `t_instrumento` (`id`) ON DELETE CASCADE,
+    `f_proceso` INT  , INDEX `f_proceso__idx` (`f_proceso`), FOREIGN KEY (`f_proceso`) REFERENCES `t_proceso` (`id`) ON DELETE CASCADE,
+    `is_active` CHAR(1),
+    `created_on` DATETIME,
+    `created_by` INT  , INDEX `created_by__idx` (`created_by`), FOREIGN KEY (`created_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `modified_on` DATETIME,
+    `modified_by` INT  , INDEX `modified_by__idx` (`modified_by`), FOREIGN KEY (`modified_by`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
+    `current_record` INT  , INDEX `current_record__idx` (`current_record`), FOREIGN KEY (`current_record`) REFERENCES `t_observacion` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2023-10-19T11:49:41.449317
+ALTER TABLE `t_observacion` ADD `f_nombre` INT  , ADD INDEX `f_nombre__idx` (`f_nombre`), ADD FOREIGN KEY (`f_nombre`) REFERENCES `t_observador` (`id`) ON DELETE CASCADE;
+success!
+timestamp: 2023-10-19T11:49:41.626181
+ALTER TABLE `t_observacion` DROP COLUMN `f_observador`;
+timestamp: 2023-10-19T11:54:27.357624
+ALTER TABLE `t_observacion` DROP COLUMN `f_observador`;
+timestamp: 2023-10-19T11:55:14.712325
+ALTER TABLE `t_observacion` DROP COLUMN `f_observador`;
+timestamp: 2023-10-19T11:56:14.718629
+ALTER TABLE `t_observacion` DROP COLUMN `f_observador`;
+timestamp: 2023-10-19T11:56:54.059120
+ALTER TABLE `t_observacion` ADD `f_observador_nombre` INT  , ADD INDEX `f_observador_nombre__idx` (`f_observador_nombre`), ADD FOREIGN KEY (`f_observador_nombre`) REFERENCES `t_observador` (`id`) ON DELETE CASCADE;
+success!
+timestamp: 2023-10-19T11:56:54.220376
+ALTER TABLE `t_observacion` DROP COLUMN `f_observador`;
+timestamp: 2023-10-19T11:57:12.125497
+ALTER TABLE `t_observacion` ADD `f_observador__nombre` INT  , ADD INDEX `f_observador__nombre__idx` (`f_observador__nombre`), ADD FOREIGN KEY (`f_observador__nombre`) REFERENCES `t_observador` (`id`) ON DELETE CASCADE;
+success!
+timestamp: 2023-10-19T11:57:12.312636
+ALTER TABLE `t_observacion` DROP COLUMN `f_observador`;
+timestamp: 2023-10-19T11:57:14.711762
+ALTER TABLE `t_observacion` DROP COLUMN `f_observador`;
+timestamp: 2023-10-19T11:58:00.571618
+ALTER TABLE `t_observador_archive` DROP COLUMN `current_record`;
+timestamp: 2023-10-19T11:58:14.492393
+ALTER TABLE `t_observador_archive` DROP COLUMN `current_record`;
+timestamp: 2023-10-19T11:58:56.242430
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T11:59:14.708467
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T11:59:18.965286
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T11:59:28.598302
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:00:11.639945
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:00:14.716242
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:01:14.750385
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:01:53.757254
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:02:14.705380
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:02:58.925588
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:03:14.710402
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:03:41.931793
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:04:20.454462
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:17:19.837144
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:18:19.413743
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:19:19.378533
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T12:19:45.051300
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-10-19T13:22:28.378105
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;
+timestamp: 2023-11-10T13:33:06.416543
+ALTER TABLE `t_observacion` DROP COLUMN `f_nombre`;

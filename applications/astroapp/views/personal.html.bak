@@ -1,0 +1,6 @@
+{{=form.custom.begin}}
+<label>{{form.custom.label.nombre}}</label>
+<input nama="nombre" type="text" value="{{form.vars.nombre}}" />
+{{=form.custom.widget.nombre}}
+{{=form.custom.error.nombre}}
+{{=form.custom.end}}
